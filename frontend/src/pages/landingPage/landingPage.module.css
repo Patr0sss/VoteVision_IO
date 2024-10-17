@@ -1,0 +1,27 @@
+.landingPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 80px;
+}
+
+.headerMessage {
+  width: 90%;
+  max-width: 600px;
+  color: #1976d2;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.headerMessage h4 {
+  color: #3e9af5;
+}
+
+.votingSection {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: fit-content;
+  column-gap: 30px;
+  row-gap: 30px;
+}
