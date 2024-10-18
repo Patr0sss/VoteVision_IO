@@ -1,0 +1,30 @@
+.authPage {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+}
+
+.authBox {
+  width: 85vw;
+  max-width: 600px;
+  min-height: 50vh;
+  border-radius: 10px;
+  border: 2px solid #1976d2;
+  box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.backArrow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.backArrow:hover {
+  color: #1976d2;
+}

@@ -17,6 +17,37 @@
   color: #1976d2;
 }
 
+.usernameSide {
+  width: 100%;
+  display: grid;
+  place-content: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #1976d2;
+}
+
+.PDFsection {
+  position: fixed;
+  top: 200vh;
+  left: 200vw;
+  width: 100vw;
+  aspect-ratio: 9/12.7;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.raportHeader {
+  margin: 0;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  font-size: 10rem;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial;
+  border-bottom: 5px solid #1976d2;
+}
 @media (max-width: 450px) {
   .registerButton {
     display: none;

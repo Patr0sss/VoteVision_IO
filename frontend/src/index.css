@@ -29,7 +29,7 @@ body {
   min-width: 320px;
   min-height: calc(100vh - 60px);
   background-color: #f4f7fd;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 
 h1 {
