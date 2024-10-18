@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { usePDF } from "react-to-pdf";
 import RaportGraph from "../lineGraph/raportGraph";
 import RaportTable from "../raportTable/raportTable";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Navbar({ user }: { user: string }) {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const SideBar = ({
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { toPDF, targetRef } = usePDF({ filename: "Raport.pdf" });
+  const { toPDF, targetRef } = usePDF({ filename: `Raport_${uuidv4()}.pdf` });
 
   const DrawerList = (
     <Box
