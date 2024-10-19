@@ -1,4 +1,4 @@
-how to :
+### how to :
 Pobierz obraz PostgreSQL:
 
 `docker pull postgres`
