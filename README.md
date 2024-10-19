@@ -128,6 +128,8 @@ graph LR
 
 ```
 
+## 5. Diagram sekwencyjny UML: 
+
 ```mermaid
 sequenceDiagram
     participant USER
@@ -150,7 +152,7 @@ sequenceDiagram
 
 ```
 
-### 5. Sugerowany Stack technologiczny :
+### 6. Sugerowany Stack technologiczny :
 
 <div style="display: flex; align-items: center; gap: 10px;">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React" width="140" height="140">
