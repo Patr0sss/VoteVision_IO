@@ -29,11 +29,11 @@
 | Jaka ma to być aplikacja? Webowa czy Desktopowa? | Webowa | - |
 | Jaka będzie liczba użytkowników? | <1k | - |
 | Z logowaniem? | Tak | Login - hasło |
-| Głosowanie jawne czy tajne? | Jawne | - |
+| Głosowanie jawne czy tajne? | Jawne | Widać kto oddał głos. |
 | Czy ma być statystyka na żywo? | Tak | - |
 | Jaka rola admina? | Tworzenie ankiet/głosowań. Dostęp do raportów | - |
 | Hosting? | Lokalnie | - |
-| Jaki interfejs użytkownika? | GUI | Funkcjonalny, przejrzysty, ładny |
+| Jaki interfejs użytkownika? | GUI | Funkcjonalny, przejrzysty, ładny. |
 | Czy admin ma mieć dostęp do raportów o wynikach głosowań? | Tak. | Raport ten będzie zawierał wykres, który wizualizuje wyniki głosowania w zależności od czasu oddania głosów. Dzięki temu administratorzy będą mogli analizować, jak głosy były oddawane w trakcie trwania ankiety |
 
 ## 3. Ustalony format danych wejściowych
