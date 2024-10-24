@@ -8,15 +8,19 @@
 - [Piotr](https://github.com/ptrthecat) - Backend Developer
 
 ## 1. Macierz kompetencji zespołu
+
 | Kompetencje | Krystian | Paweł | Karol | Piotr |
 | ----------- | -------- |----------|----------|-------|
 | Bazy Danych SQL | ✅ | ✅ | ❌ | ❌ |
+| Bazy Danych NoSQL | ✅ | ✅ | ❌ | ❌ |
 | React TS | ✅ | ❌ | ❌ | ❌ |
-| Backend| ✅ | ❌ | ✅ | ✅ |
 | Znajomość Flask / Django | ✅ | ❌ | ❌ | ✅ |
 | Znajomość Java | ❌ | ✅ | ✅ | ✅ |
+| Znajomość Node.js, Express.js | ✅ | ❌ | ✅ | ❌ |
 | Testowanie| ❌ | ❌ | ✅ | ✅ |
+| Postman  | ✅ | ❌ | ✅ | ❌ |
 | Project Management| ✅ | ❌ | ❌ | ❌ | 
+| Docker | ❌ | ✅ | ❌ | ❌ | 
 
 ## 2. Zestaw pytań 
 
