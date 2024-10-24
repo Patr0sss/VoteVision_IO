@@ -5,15 +5,17 @@
 - [Miyagi](https://github.com/Patr0sss) - Project Manager, FrontEnd Developer  
 - [Paweł](https://github.com/pawel-rus) - Database Administrator, README Specialist
 - [Karo(L)](https://github.com/kslowiak) - Backend Developer
-- [Piotr](https://github.com/ptrthecat) - Error Creator
+- [Piotr](https://github.com/ptrthecat) - Backend Developer
 
 ## 1. Macierz kompetencji zespołu
 | Kompetencje | Krystian | Paweł | Karol | Piotr |
 | ----------- | -------- |----------|----------|-------|
+| Bazy Danych SQL | ✅ | ✅ | ❌ | ❌ |
 | React TS | ✅ | ❌ | ❌ | ❌ |
-| Bazy Danych| ❌ | ✅ | ❌ | ❌ |
-| Backend| ✅ | ✅ | ❌ | ❌ |
-| Testowanie| ❌ | ❌ | ❌ | ❌ |
+| Backend| ✅ | ❌ | ✅ | ✅ |
+| Znajomość Flask / Django | ✅ | ❌ | ❌ | ✅ |
+| Znajomość Java | ❌ | ✅ | ✅ | ✅ |
+| Testowanie| ❌ | ❌ | ✅ | ✅ |
 | Project Management| ✅ | ❌ | ❌ | ❌ | 
 
 ## 2. Zestaw pytań 
