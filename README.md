@@ -140,24 +140,32 @@ graph LR
 ```mermaid
 sequenceDiagram
     participant USER
-    participant WEBAPP
+    participant FRONTEND
+    participant BACKEND
     participant DATABASE
 
-    USER->>WEBAPP: 1. Login
-    WEBAPP->>DATABASE: 2. Validate Credentials
-    DATABASE-->>WEBAPP: 3. Credentials Valid/Invalid
-    WEBAPP-->>USER: 4. Login Success/Error
+    USER->>FRONTEND: 1. Login
+    FRONTEND->>BACKEND: 2. Send Credentials
+    BACKEND->>DATABASE: 3. Validate Credentials
+    DATABASE-->>BACKEND: 4. Credentials Valid/Invalid
+    BACKEND-->>FRONTEND: 5. Login Status (Success/Error)
+    FRONTEND-->>USER: 6. Display Login Status
 
-    USER->>WEBAPP: 5. Select Poll
-    WEBAPP->>DATABASE: 6. Fetch Poll Details
-    DATABASE-->>WEBAPP: 7. Poll Details
+    USER->>FRONTEND: 7. Select Poll
+    FRONTEND->>BACKEND: 8. Request Poll Details
+    BACKEND->>DATABASE: 9. Fetch Poll Details
+    DATABASE-->>BACKEND: 10. Poll Details
+    BACKEND-->>FRONTEND: 11. Return Poll Details
+    FRONTEND-->>USER: 12. Display Poll Details
 
-    USER->>WEBAPP: 8. Submit Vote
-    WEBAPP->>DATABASE: 9. Save Vote
-    DATABASE-->>WEBAPP: 10. Vote Saved/Failed
-    WEBAPP-->>USER: 11. Confirmation/Error Message
-
+    USER->>FRONTEND: 13. Submit Vote
+    FRONTEND->>BACKEND: 14. Send Vote Data
+    BACKEND->>DATABASE: 15. Save Vote
+    DATABASE-->>BACKEND: 16. Vote Saved/Failed
+    BACKEND-->>FRONTEND: 17. Confirmation/Error Message
+    FRONTEND-->>USER: 18. Display Confirmation/Error
 ```
+
 
 ### 6. Sugerowany Stack technologiczny :
 
