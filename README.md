@@ -34,6 +34,7 @@
 | Jaka rola admina? | Tworzenie ankiet/głosowań. Dostęp do raportów | - |
 | Hosting? | Lokalnie | - |
 | Jaki interfejs użytkownika? | GUI | Funkcjonalny, przejrzysty, ładny |
+| Czy admin ma mieć dostęp do raportów o wynikach głosowań? | Tak. | Raport ten będzie zawierał wykres, który wizualizuje wyniki głosowania w zależności od czasu oddania głosów. Dzięki temu administratorzy będą mogli analizować, jak głosy były oddawane w trakcie trwania ankiety |
 
 ## 3. Ustalony format danych wejściowych
 
