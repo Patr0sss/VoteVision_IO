@@ -1,0 +1,39 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Użyj zmiennej środowiskowej
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  email    String @unique
+  role     String
+}
+
+model Poll {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  scale       String
+  opensAt     DateTime
+  expiresAt   DateTime
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  pollId    Int
+  userId    Int
+  voteValue Int
+  votedAt   DateTime @default(now())
+}
+
+model Result {
+  pollId      Int   @id
+  averageVote Float
+  votesCount  Int
+}
