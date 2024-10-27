@@ -67,7 +67,7 @@
 | -------------- | -------------- | -------------------------------------------------- |
 | `id`           | `INT`          | Unikalny identyfikator głosu (klucz główny)        |
 | `poll_id`      | `INT`          | ID ankiety, na którą oddano głos (klucz obcy)      |
-| `user_id`      | `INT`          | ID użytkownika, który oddał głos (klucz obcy)      |
+| `username`     | `INT`          | username użytkownika, który oddał głos             |
 | `vote_value`   | `INT`          | Wartość oddanego głosu w ustalonej skali           |
 | `voted_at`     | `TIMESTAMP`    | Data i czas oddania głosu                          |
 

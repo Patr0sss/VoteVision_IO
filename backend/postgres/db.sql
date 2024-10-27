@@ -19,11 +19,10 @@ CREATE TABLE polls (
 CREATE TABLE votes (
     id SERIAL PRIMARY KEY,
     poll_id INT NOT NULL,
-    user_id INT NOT NULL,
+    username VARCHAR(50) NOT NULL,
     vote_value INT NOT NULL,
     voted_at TIMESTAMP NOT NULL,
     FOREIGN KEY (poll_id) REFERENCES polls(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE results (
