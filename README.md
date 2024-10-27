@@ -5,16 +5,22 @@
 - [Miyagi](https://github.com/Patr0sss) - Project Manager, FrontEnd Developer  
 - [Paweł](https://github.com/pawel-rus) - Database Administrator, README Specialist
 - [Karo(L)](https://github.com/kslowiak) - Backend Developer
-- [Piotr](https://github.com/ptrthecat) - Error Creator
+- [Piotr](https://github.com/ptrthecat) - Backend Developer
 
 ## 1. Macierz kompetencji zespołu
+
 | Kompetencje | Krystian | Paweł | Karol | Piotr |
 | ----------- | -------- |----------|----------|-------|
+| Bazy Danych SQL | ✅ | ✅ | ❌ | ❌ |
+| Bazy Danych NoSQL | ✅ | ✅ | ❌ | ❌ |
 | React TS | ✅ | ❌ | ❌ | ❌ |
-| Bazy Danych| ❌ | ✅ | ❌ | ❌ |
-| Backend| ✅ | ✅ | ❌ | ❌ |
-| Testowanie| ❌ | ❌ | ❌ | ❌ |
+| Znajomość Flask / Django | ✅ | ❌ | ❌ | ✅ |
+| Znajomość Java | ❌ | ✅ | ✅ | ✅ |
+| Znajomość Node.js, Express.js | ✅ | ❌ | ✅ | ❌ |
+| Testowanie| ❌ | ❌ | ✅ | ✅ |
+| Postman  | ✅ | ❌ | ✅ | ❌ |
 | Project Management| ✅ | ❌ | ❌ | ❌ | 
+| Docker | ❌ | ✅ | ❌ | ❌ | 
 
 ## 2. Zestaw pytań 
 
@@ -23,11 +29,12 @@
 | Jaka ma to być aplikacja? Webowa czy Desktopowa? | Webowa | - |
 | Jaka będzie liczba użytkowników? | <1k | - |
 | Z logowaniem? | Tak | Login - hasło |
-| Głosowanie jawne czy tajne? | Jawne | - |
+| Głosowanie jawne czy tajne? | Jawne | Widać kto oddał głos. |
 | Czy ma być statystyka na żywo? | Tak | - |
 | Jaka rola admina? | Tworzenie ankiet/głosowań. Dostęp do raportów | - |
 | Hosting? | Lokalnie | - |
-| Jaki interfejs użytkownika? | GUI | Funkcjonalny, przejrzysty, ładny |
+| Jaki interfejs użytkownika? | GUI | Funkcjonalny, przejrzysty, ładny. |
+| Czy admin ma mieć dostęp do raportów o wynikach głosowań? | Tak. | Raport ten będzie zawierał wykres, który wizualizuje wyniki głosowania w zależności od czasu oddania głosów. Dzięki temu administratorzy będą mogli analizować, jak głosy były oddawane w trakcie trwania ankiety |
 
 ## 3. Ustalony format danych wejściowych
 
@@ -133,24 +140,32 @@ graph LR
 ```mermaid
 sequenceDiagram
     participant USER
-    participant WEBAPP
+    participant FRONTEND
+    participant BACKEND
     participant DATABASE
 
-    USER->>WEBAPP: 1. Login
-    WEBAPP->>DATABASE: 2. Validate Credentials
-    DATABASE-->>WEBAPP: 3. Credentials Valid/Invalid
-    WEBAPP-->>USER: 4. Login Success/Error
+    USER->>FRONTEND: 1. Login
+    FRONTEND->>BACKEND: 2. Send Credentials
+    BACKEND->>DATABASE: 3. Validate Credentials
+    DATABASE-->>BACKEND: 4. Credentials Valid/Invalid
+    BACKEND-->>FRONTEND: 5. Login Status (Success/Error)
+    FRONTEND-->>USER: 6. Display Login Status
 
-    USER->>WEBAPP: 5. Select Poll
-    WEBAPP->>DATABASE: 6. Fetch Poll Details
-    DATABASE-->>WEBAPP: 7. Poll Details
+    USER->>FRONTEND: 7. Select Poll
+    FRONTEND->>BACKEND: 8. Request Poll Details
+    BACKEND->>DATABASE: 9. Fetch Poll Details
+    DATABASE-->>BACKEND: 10. Poll Details
+    BACKEND-->>FRONTEND: 11. Return Poll Details
+    FRONTEND-->>USER: 12. Display Poll Details
 
-    USER->>WEBAPP: 8. Submit Vote
-    WEBAPP->>DATABASE: 9. Save Vote
-    DATABASE-->>WEBAPP: 10. Vote Saved/Failed
-    WEBAPP-->>USER: 11. Confirmation/Error Message
-
+    USER->>FRONTEND: 13. Submit Vote
+    FRONTEND->>BACKEND: 14. Send Vote Data
+    BACKEND->>DATABASE: 15. Save Vote
+    DATABASE-->>BACKEND: 16. Vote Saved/Failed
+    BACKEND-->>FRONTEND: 17. Confirmation/Error Message
+    FRONTEND-->>USER: 18. Display Confirmation/Error
 ```
+
 
 ### 6. Sugerowany Stack technologiczny :
 
