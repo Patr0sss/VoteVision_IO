@@ -4,6 +4,7 @@ import LandingPage from "./pages/landingPage/landingPage";
 import Navbar from "./components/navbar/navbar";
 import AuthPage from "./pages/authPage/authPage";
 import { useEffect, useState } from "react";
+import CreateVotingPage from "./pages/createVoingPage/createVotingPage";
 
 function App() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/createVoting" element={<CreateVotingPage />} />
       </Routes>
     </div>
   );

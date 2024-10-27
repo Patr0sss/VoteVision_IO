@@ -5,7 +5,7 @@ import styles from "./navbar.module.css";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { usePDF } from "react-to-pdf";
 import RaportGraph from "../lineGraph/raportGraph";
 import RaportTable from "../raportTable/raportTable";
@@ -16,7 +16,9 @@ export default function Navbar({ user }: { user: string }) {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   return (
     <nav className={styles.navbar}>
-      <h2 className={styles.brandname}>VoteVision</h2>
+      <Link to="/">
+        <h2 className={styles.brandname}>VoteVision</h2>
+      </Link>
 
       {!user ? (
         <Stack spacing={2} direction="row">
@@ -131,13 +133,21 @@ const SideBar = ({
               <TreeItem itemId="pickers-pro" label="Instagram" />
             </TreeItem>
             <TreeItem
-              itemId="charts"
-              label="Charts"
+              itemId="votingData"
+              label="Voting Data"
               sx={{
                 "& .MuiTreeItem-label": { fontWeight: "bold" },
               }}
             >
               <TreeItem itemId="charts-community" label="Voting Charts" />
+              <Link to="/createVoting">
+                <TreeItem
+                  itemId="Create Voting"
+                  label="createVoting"
+                  onClick={() => setOpen(false)}
+                />
+              </Link>
+
               <TreeItem
                 itemId="generateRaport"
                 label="Generate Raport"
