@@ -10,10 +10,11 @@ const prisma = new PrismaClient();
 // Middleware do parsowania JSON
 app.use(bodyParser.json());
 
-// Endpoint do dodawania nowego użytkownika
+// Endpointy dla tabeli `users`
+
+// Dodawanie nowego użytkownika
 app.post('/users', async (req, res) => {
   const { username, email, password, role } = req.body;
-
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await prisma.user.create({
@@ -31,7 +32,7 @@ app.post('/users', async (req, res) => {
   }
 });
 
-// Endpoint do pobierania wszystkich użytkowników
+// Pobieranie wszystkich użytkowników
 app.get('/users', async (req, res) => {
   try {
     const users = await prisma.user.findMany();
@@ -42,7 +43,7 @@ app.get('/users', async (req, res) => {
   }
 });
 
-// Endpoint do pobierania użytkownika po ID
+// Pobieranie użytkownika po ID
 app.get('/users/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -59,17 +60,13 @@ app.get('/users/:id', async (req, res) => {
   }
 });
 
-// Endpoint do aktualizacji użytkownika
+// Aktualizacja użytkownika
 app.put('/users/:id', async (req, res) => {
   const { id } = req.params;
   const { username, email, password, role } = req.body;
 
   try {
-    const updatedData = {
-      username,
-      email,
-      role,
-    };
+    const updatedData = { username, email, role };
     if (password) {
       updatedData.password = await bcrypt.hash(password, 10);
     }
@@ -85,7 +82,7 @@ app.put('/users/:id', async (req, res) => {
   }
 });
 
-// Endpoint do usuwania użytkownika
+// Usuwanie użytkownika
 app.delete('/users/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -96,6 +93,169 @@ app.delete('/users/:id', async (req, res) => {
   } catch (error) {
     console.error('Błąd przy usuwaniu użytkownika:', error);
     res.status(500).json({ error: 'Nie udało się usunąć użytkownika' });
+  }
+});
+
+// Endpointy dla tabeli `polls`
+
+// Tworzenie ankiety
+app.post('/polls', async (req, res) => {
+  const { title, description, scale, opens_at, expires_at } = req.body;
+  try {
+    const newPoll = await prisma.poll.create({
+      data: { title, description, scale, opens_at, expires_at },
+    });
+    res.status(201).json(newPoll);
+  } catch (error) {
+    console.error('Błąd przy tworzeniu ankiety:', error);
+    res.status(500).json({ error: 'Nie udało się utworzyć ankiety' });
+  }
+});
+
+// Pobieranie wszystkich ankiet
+app.get('/polls', async (req, res) => {
+  try {
+    const polls = await prisma.poll.findMany();
+    res.json(polls);
+  } catch (error) {
+    console.error('Błąd przy pobieraniu ankiet:', error);
+    res.status(500).json({ error: 'Nie udało się pobrać ankiet' });
+  }
+});
+
+// Pobieranie aktywnych ankiet
+app.get('/polls/active', async (req, res) => {
+  try {
+    const now = new Date();
+    const activePolls = await prisma.poll.findMany({
+      where: {
+        opens_at: { lte: now },
+        expires_at: { gte: now },
+      },
+    });
+    res.json(activePolls);
+  } catch (error) {
+    console.error('Błąd przy pobieraniu aktywnych ankiet:', error);
+    res.status(500).json({ error: 'Nie udało się pobrać aktywnych ankiet' });
+  }
+});
+
+// Pobieranie ankiety po ID
+app.get('/polls/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const poll = await prisma.poll.findUnique({
+      where: { id: Number(id) },
+    });
+    if (!poll) {
+      return res.status(404).json({ error: 'Ankieta nie znaleziony' });
+    }
+    res.json(poll);
+  } catch (error) {
+    console.error('Błąd przy pobieraniu ankiety:', error);
+    res.status(500).json({ error: 'Nie udało się pobrać ankiety' });
+  }
+});
+
+// Aktualizacja ankiety
+app.put('/polls/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, description, scale, opens_at, expires_at } = req.body;
+  try {
+    const updatedPoll = await prisma.poll.update({
+      where: { id: Number(id) },
+      data: { title, description, scale, opens_at, expires_at },
+    });
+    res.json(updatedPoll);
+  } catch (error) {
+    console.error('Błąd przy aktualizacji ankiety:', error);
+    res.status(500).json({ error: 'Nie udało się zaktualizować ankiety' });
+  }
+});
+
+// Usuwanie ankiety
+app.delete('/polls/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.poll.delete({
+      where: { id: Number(id) },
+    });
+    res.status(204).send();
+  } catch (error) {
+    console.error('Błąd przy usuwaniu ankiety:', error);
+    res.status(500).json({ error: 'Nie udało się usunąć ankiety' });
+  }
+});
+
+// Endpointy dla tabeli `votes`
+
+// Dodawanie głosu do ankiety
+app.post('/votes', async (req, res) => {
+  const { poll_id, username, vote_value } = req.body;
+  const voted_at = new Date();
+  try {
+    const newVote = await prisma.vote.create({
+      data: { poll_id, username, vote_value, voted_at },
+    });
+    res.status(201).json(newVote);
+  } catch (error) {
+    console.error('Błąd przy dodawaniu głosu:', error);
+    res.status(500).json({ error: 'Nie udało się dodać głosu' });
+  }
+});
+
+// Pobieranie wszystkich głosów
+app.get('/votes', async (req, res) => {
+  try {
+    const votes = await prisma.vote.findMany();
+    res.json(votes);
+  } catch (error) {
+    console.error('Błąd przy pobieraniu głosów:', error);
+    res.status(500).json({ error: 'Nie udało się pobrać głosów' });
+  }
+});
+
+// Pobieranie głosów dla konkretnej ankiety
+app.get('/votes/:poll_id', async (req, res) => {
+  const { poll_id } = req.params;
+  try {
+    const votes = await prisma.vote.findMany({
+      where: { poll_id: Number(poll_id) },
+    });
+    res.json(votes);
+  } catch (error) {
+    console.error('Błąd przy pobieraniu głosów:', error);
+    res.status(500).json({ error: 'Nie udało się pobrać głosów' });
+  }
+});
+
+// Endpointy dla tabeli `results`
+
+// Pobieranie wszystkich wyników
+app.get('/results', async (req, res) => {
+  try {
+    const results = await prisma.result.findMany();
+    res.json(results);
+  } catch (error) {
+    console.error('Błąd przy pobieraniu wyników:', error);
+    res.status(500).json({ error: 'Nie udało się pobrać wyników' });
+  }
+});
+
+// Pobieranie wyników dla konkretnej ankiety
+app.get('/results/:poll_id', async (req, res) => {
+  const { poll_id } = req.params;
+  try {
+    const result = await prisma.result.findUnique({
+      where: { poll_id: Number(poll_id) },
+    });
+    if (!result) {
+      return res.status(404).json({ error: 'Wynik nie znaleziony' });
+    }
+    res.json(result);
+  } catch (error) {
+    console.error('Błąd przy pobieraniu wyników ankiety:', error);
+    res.status(500).json({ error: 'Nie udało się pobrać wyników ankiety' });
   }
 });
 
