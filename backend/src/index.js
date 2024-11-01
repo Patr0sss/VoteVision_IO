@@ -96,14 +96,41 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
+//logowanie
+app.get('/login', async (req, res) => {
+  const { username } = req.body;
+
+  try {
+    const currentUser = await prisma.user.findUnique({
+      where: { username: username },
+    });
+
+    if (!currentUser) {
+      return res.status(404).json({ error: 'Nie znaleziono użytkownika o podanym username' });
+    }
+
+    res.status(200).json(currentUser);
+  } catch (error) {
+    console.error('Błąd przy pobieraniu użytkowników:', error);
+    res.status(500).json({ error: 'Nie udało się pobrać użytkowników' });
+  }
+});
+
+
 // Endpointy dla tabeli `polls`
 
 // Tworzenie ankiety
 app.post('/polls', async (req, res) => {
-  const { title, description, scale, opens_at, expires_at } = req.body;
+  const { title, description, scale, opensAt, expiresAt } = req.body;
   try {
     const newPoll = await prisma.poll.create({
-      data: { title, description, scale, opens_at, expires_at },
+      data: {
+        title,
+        description,
+        scale,
+        opensAt: new Date(opensAt),  
+        expiresAt: new Date(expiresAt),
+      }
     });
     res.status(201).json(newPoll);
   } catch (error) {
@@ -111,6 +138,7 @@ app.post('/polls', async (req, res) => {
     res.status(500).json({ error: 'Nie udało się utworzyć ankiety' });
   }
 });
+
 
 // Pobieranie wszystkich ankiet
 app.get('/polls', async (req, res) => {
@@ -129,8 +157,8 @@ app.get('/polls/active', async (req, res) => {
     const now = new Date();
     const activePolls = await prisma.poll.findMany({
       where: {
-        opens_at: { lte: now },
-        expires_at: { gte: now },
+        opensAt: { lte: now },  
+        expiresAt: { gte: now }, 
       },
     });
     res.json(activePolls);
@@ -139,6 +167,7 @@ app.get('/polls/active', async (req, res) => {
     res.status(500).json({ error: 'Nie udało się pobrać aktywnych ankiet' });
   }
 });
+
 
 // Pobieranie ankiety po ID
 app.get('/polls/:id', async (req, res) => {
@@ -191,11 +220,17 @@ app.delete('/polls/:id', async (req, res) => {
 
 // Dodawanie głosu do ankiety
 app.post('/votes', async (req, res) => {
-  const { poll_id, username, vote_value } = req.body;
-  const voted_at = new Date();
+  const { pollId, userId, voteValue } = req.body; // Upewnij się, że dodajesz userId i voteValue
+  const votedAt = new Date();
+  
   try {
     const newVote = await prisma.vote.create({
-      data: { poll_id, username, vote_value, voted_at },
+      data: {
+        pollId: pollId,  
+        userId: userId,   
+        voteValue: voteValue, 
+        votedAt: votedAt   
+      },
     });
     res.status(201).json(newVote);
   } catch (error) {
@@ -220,7 +255,7 @@ app.get('/votes/:poll_id', async (req, res) => {
   const { poll_id } = req.params;
   try {
     const votes = await prisma.vote.findMany({
-      where: { poll_id: Number(poll_id) },
+      where: { pollId: Number(poll_id) }, 
     });
     res.json(votes);
   } catch (error) {
@@ -228,6 +263,7 @@ app.get('/votes/:poll_id', async (req, res) => {
     res.status(500).json({ error: 'Nie udało się pobrać głosów' });
   }
 });
+
 
 // Endpointy dla tabeli `results`
 
