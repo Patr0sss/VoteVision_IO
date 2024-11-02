@@ -48,10 +48,10 @@ export default function Navbar({ user }: { user: string }) {
           style={{ cursor: "pointer" }}
           onClick={() => setIsSideMenuOpen((prev) => !prev)}
         >
-          {user}
+          {JSON.parse(user)}
         </h3>
       )}
-      <SideBar open={isSideMenuOpen} setOpen={setIsSideMenuOpen} />
+      <SideBar open={isSideMenuOpen} setOpen={setIsSideMenuOpen} user={user} />
     </nav>
   );
 }
@@ -59,12 +59,15 @@ export default function Navbar({ user }: { user: string }) {
 const SideBar = ({
   open,
   setOpen,
+  user,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  user: string;
 }) => {
   const { toPDF, targetRef } = usePDF({ filename: `Raport_${uuidv4()}.pdf` });
 
+  user = user.replace(/"/g, "");
   const DrawerList = (
     <Box
       sx={{
@@ -83,13 +86,16 @@ const SideBar = ({
           color: "#1976d2",
         }}
       >
-        {localStorage.getItem("username")}
+        {user}
       </h3>
 
       <form
         onSubmit={() => {
           setOpen(false);
           localStorage.removeItem("username");
+          localStorage.removeItem("userRole");
+          localStorage.removeItem("userID");
+          localStorage.removeItem("userEmail");
         }}
       >
         <Box

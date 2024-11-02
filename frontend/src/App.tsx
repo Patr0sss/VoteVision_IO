@@ -13,7 +13,6 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("username")) {
       setUser(localStorage.getItem("username") as string);
-      console.log("USER : " + localStorage.getItem("username"));
     }
   }, []);
   return (

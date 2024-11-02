@@ -3,6 +3,7 @@ import styles from "./authPage.module.css";
 import { Button, Stack, TextField } from "@mui/material";
 import BackArrow from "../../assets/backArrow";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 type authModeType = "login" | "register";
 
@@ -15,6 +16,10 @@ export default function AuthPage() {
       localStorage.getItem("authMode") === "register"
     ) {
       setAuthMode(localStorage.getItem("authMode") as authModeType);
+    }
+
+    if (localStorage.getItem("username")) {
+      window.location.href = "/";
     }
   }, []);
 
@@ -41,11 +46,35 @@ const Login = ({
   const [user, setUser] = useState({ username: "", password: "" });
 
   const navigate = useNavigate();
-  const handleLogin = () => {
-    localStorage.setItem("username", user.username);
+  const loginUser = async () => {
+    if (user.password.length > 1 && user.username !== "") {
+      try {
+        const res = await axios.get("http://127.0.0.1:3000/login", {
+          params: {
+            username: user.username,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
 
-    navigate("/");
-    window.location.reload();
+        if (res.status === 200) {
+          console.log(res.data);
+          localStorage.setItem("username", JSON.stringify(res.data.username));
+          localStorage.setItem("userID", JSON.stringify(res.data.id));
+          localStorage.setItem("userEmail", JSON.stringify(res.data.email));
+          localStorage.setItem("userRole", JSON.stringify(res.data.role));
+          window.location.reload();
+          navigate("/");
+          window.location.href = "/";
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("Invalid Form");
+    }
   };
   return (
     <section className={styles.authBox}>
@@ -82,7 +111,7 @@ const Login = ({
           }
         />
       </Stack>
-      <form onSubmit={handleLogin} style={{ width: "100%" }}>
+      <form onSubmit={loginUser} style={{ width: "100%" }}>
         <Button
           type="submit"
           variant="contained"
@@ -105,10 +134,49 @@ const Register = ({
   setAuthMode: Dispatch<SetStateAction<authModeType>>;
 }) => {
   const [newUser, setNewUser] = useState({
+    email: "",
     username: "",
     password: "",
     repeatPassword: "",
   });
+
+  const registerUser = async () => {
+    if (
+      newUser.password === newUser.repeatPassword &&
+      newUser.password.length > 1 &&
+      newUser.email !== "" &&
+      newUser.username !== ""
+    ) {
+      try {
+        const res = await axios.post(
+          "http://127.0.0.1:3000/users",
+          {
+            email: newUser.email,
+            username: newUser.username,
+            password: newUser.password,
+            role: "user",
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+
+        if (res.status === 201) {
+          setAuthMode("login");
+          // localStorage.setItem("authMode", "login");
+          // window.location.reload();
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("Invalid Form");
+    }
+  };
+
   return (
     <div className={styles.authBox}>
       <h2>VoteVision</h2>
@@ -118,6 +186,18 @@ const Register = ({
         direction="column"
         sx={{ width: "100%", alignItems: "center" }}
       >
+        <TextField
+          sx={{ width: "50%" }}
+          id="outlined-basic"
+          label="Email"
+          variant="outlined"
+          onChange={(e) =>
+            setNewUser((newUser) => ({
+              ...newUser,
+              email: e.target.value,
+            }))
+          }
+        />
         <TextField
           sx={{ width: "50%" }}
           id="outlined-basic"
@@ -175,7 +255,13 @@ const Register = ({
 
       <Button
         variant="contained"
-        sx={{ fontWeight: "bold", width: "40%", padding: "10px" }}
+        sx={{
+          fontWeight: "bold",
+          width: "40%",
+          padding: "10px",
+          marginTop: "20px",
+        }}
+        onClick={() => registerUser()}
       >
         Register
       </Button>

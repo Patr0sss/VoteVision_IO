@@ -48,8 +48,13 @@ export default function RaportGraph() {
             [
               {
                 scaleType: "band",
-                categoryGapRatio: 0.5,
-                data: ["1", "2", "3", "4", "5", "6", "7"],
+                categoryGapRatio: 0.7,
+                data: [
+                  "Projekt Miyagiego",
+                  "Digital Learning Transformation",
+                  "Green City Initiative",
+                  "Community Health Awareness",
+                ],
               },
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ] as any
@@ -58,7 +63,7 @@ export default function RaportGraph() {
             {
               id: "page-views",
               label: "Page views",
-              data: [1234, 387, 298, 415, 357, 289, 298],
+              data: [29, 34, 9, 18],
               stack: "A",
             },
             // {

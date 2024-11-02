@@ -1,16 +1,49 @@
+import { useEffect, useState } from "react";
 import VotingCard from "../../components/votingCard/votingCard";
 import styles from "./landingPage.module.css";
+import axios from "axios";
+
+interface Poll {
+  id: number;
+  title: string;
+  description: string;
+  scale: string;
+  opensAt: string;
+  expiresAt: string;
+}
 
 export default function LandingPage() {
-  const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const [polls, setPolls] = useState<Poll[]>([]);
 
+  useEffect(() => {
+    const fetchPolls = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:3000/polls/active", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+        setPolls(response.data);
+      } catch (err) {
+        console.error("Error fetching polls:", err);
+      }
+    };
+
+    fetchPolls();
+  }, []);
   return (
     <div className={styles.landingPage}>
       <HeaderMessage />
 
       <div className={styles.votingSection}>
-        {test.map((_, index) => (
-          <VotingCard key={index} />
+        {polls.map((poll) => (
+          <VotingCard
+            key={poll.id}
+            description={poll.description}
+            name={poll.title}
+            id={poll.id}
+          />
         ))}
       </div>
     </div>
