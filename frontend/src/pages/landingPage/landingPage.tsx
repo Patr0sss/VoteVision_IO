@@ -14,7 +14,11 @@ interface Poll {
 
 export default function LandingPage() {
   const [polls, setPolls] = useState<Poll[]>([]);
-
+  useEffect(() => {
+    if (!localStorage.getItem("username")) {
+      window.location.href = "/auth";
+    }
+  }, []);
   useEffect(() => {
     const fetchPolls = async () => {
       try {
